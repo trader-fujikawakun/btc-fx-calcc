@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTC FX ポジションサイズ計算</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- タイトル -->
+<h1>【BTC FX専用】ポジションサイズ自動計算</h1>
+
+<!-- 開発者情報（SNSリンクのみ） -->
+<div class="developer-info">
+  <a href="https://lit.link/fxbtc" target="_blank">
+    当サイト開発者のSNSはこちらをタップ
+  </a>
+</div>
+
+<div class="input-area">
+  <label>① 先物証拠金（残高）は何USDTですか？</label>
+  <input type="number" id="capital">
+
+  <label>② 取引で許容できる損失額は口座残高の何％ですか？</label>
+  <input type="number" id="risk">
+
+  <label>③ エントリー価格はどの価格ですか？</label>
+  <input type="number" id="entry">
+
+  <label>④ 損切り位置（価格）はどこに設定しますか？</label>
+  <input type="number" id="stop-price">
+
+  <label>⑤ 利確位置（価格）はどこに設定しますか？</label>
+  <p class="note">※入力すれば想定利益も自動表示されます。</p>
+  <input type="number" id="take-price">
+</div>
+
+<div class="result-area">
+  <h2>計算結果</h2>
+  <p class="position-size">適正ポジションサイズ：<span id="position-size">-</span> BTC</p>
+  <p>想定損失額：<span id="loss">-</span> USDT</p>
+  <p>想定利益：<span id="profit">-</span> USDT</p>
+  <p id="quote" class="quote"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
