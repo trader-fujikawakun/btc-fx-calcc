@@ -15,16 +15,16 @@ h1 {
   text-align: center;
   font-size: 26px;
   color: #0066cc;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 0 10px;
   word-break: keep-all;
 }
 
 .developer-info {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  left: 10px;
   font-size: 12px;
 }
 
@@ -42,8 +42,8 @@ h1 {
 .input-area, .result-area {
   max-width: 500px;
   width: 100%;
-  margin: 20px;
-  padding: 20px 25px;
+  margin: 10px;
+  padding: 15px 20px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
@@ -52,15 +52,15 @@ h1 {
 
 label {
   display: block;
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 14px;
   color: #0066cc;
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin-top: 6px;
+  padding: 10px;
+  margin-top: 5px;
   border-radius: 10px;
   border: 1px solid #ccc;
   background: #f9f9f9;
@@ -95,7 +95,7 @@ input {
 }
 
 .quote {
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 14px;
   font-weight: bold;
   color: #0066cc;
@@ -124,12 +124,13 @@ input {
 @media (max-width: 600px) {
   h1 {
     font-size: 16px;
-    margin-top: 50px;
+    margin-top: 40px;
+    margin-bottom: 10px;
   }
 
   .input-area, .result-area {
-    padding: 15px;
-    margin: 15px;
+    padding: 10px;
+    margin: 10px;
   }
 
   .position-size span, #loss, #profit {
@@ -137,6 +138,7 @@ input {
   }
 
   .developer-info {
-    top: 100px;
+    top: 10px;
+    left: 10px;
   }
 }
