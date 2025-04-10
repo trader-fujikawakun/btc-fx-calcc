@@ -9,6 +9,7 @@ body {
   min-height: 100vh;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -17,10 +18,12 @@ h1 {
   color: #ff6f00;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding: 0 10px;
+  padding: 5px 10px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
   word-break: keep-all;
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
 }
 
 .developer-info {
@@ -48,7 +51,7 @@ h1 {
 }
 
 .input-area, .result-area {
-  max-width: 500px;
+  max-width: 450px;
   width: 100%;
   margin: 5px;
   padding: 8px 12px;
@@ -59,10 +62,13 @@ h1 {
 }
 
 label {
-  display: block;
+  display: inline-block;
   margin-top: 10px;
   font-size: 14px;
-  color: #ff6f00;
+  color: #000;
+  background: rgba(255,255,255,0.8);
+  padding: 4px 8px;
+  border-radius: 6px;
 }
 
 input {
@@ -136,11 +142,13 @@ input {
     font-size: 20px;
     margin-top: 40px;
     margin-bottom: 10px;
+    max-width: 90%;
   }
 
   .input-area, .result-area {
     padding: 6px;
     margin: 3px;
+    max-width: 90%;
   }
 
   .position-size span, #loss, #profit {
