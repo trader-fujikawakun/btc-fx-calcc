@@ -21,7 +21,7 @@ h1 {
   word-break: keep-all;
 }
 
-/* 開発者情報（SNSリンクのみ） */
+/* 開発者情報（SNSリンク） */
 .developer-info {
   position: absolute;
   top: 20px;
@@ -68,24 +68,6 @@ input {
   box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
   font-size: 14px;
   box-sizing: border-box;
-}
-
-button {
-  margin-top: 20px;
-  padding: 12px;
-  width: 100%;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
 }
 
 .result-area {
@@ -139,9 +121,10 @@ button:hover {
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* スマホ表示対応 */
 @media (max-width: 600px) {
   h1 {
-    font-size: 22px;
+    font-size: 18px;
   }
 
   .input-area, .result-area {
@@ -151,5 +134,9 @@ button:hover {
 
   .position-size span, #loss, #profit {
     font-size: 22px;
+  }
+
+  .developer-info {
+    top: 80px; /* スマホ時だけSNSリンク位置を下げる */
   }
 }
