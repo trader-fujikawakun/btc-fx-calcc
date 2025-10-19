@@ -15,13 +15,13 @@ function calculate() {
     positionSize = (riskAmount / priceDifference).toFixed(4);
   }
 
-  if (!isNaN(takeProfit) && takeProfit > 0) {
+  if (!isNaN(takeProfit) && takeProfit > 0 && positionSize !== "-") {
     const potentialProfit = Math.abs(takeProfit - entryPrice) * parseFloat(positionSize);
-    profit = Math.round(potentialProfit).toLocaleString();
+    profit = Math.round(potentialProfit).toLocaleString() + " USDT";
   }
 
   document.getElementById('positionSize').textContent = positionSize;
-  document.getElementById('lossAmount').textContent = Math.round(riskAmount).toLocaleString();
+  document.getElementById('lossAmount').textContent = Math.round(riskAmount).toLocaleString() + " USDT";
   document.getElementById('profitAmount').textContent = profit;
 }
 
@@ -39,18 +39,14 @@ tabs.forEach(tab => {
     document.body.setAttribute("data-currency", currency);
     document.getElementById('unit').textContent = currency;
 
-    // リセット
+    // フォームのリセット
     document.getElementById('calcForm').reset();
     document.getElementById('positionSize').textContent = '-';
     document.getElementById('lossAmount').textContent = '-';
     document.getElementById('profitAmount').textContent = '-';
 
-    // 記入例の表示制御
+    // 例の非表示（BTC以外は表示しない）
     const example = document.getElementById('priceExample');
-    if (currency === 'BTC') {
-      example.textContent = "(例: BTCなら4000000)";
-    } else {
-      example.textContent = "";
-    }
+    example.textContent = currency === 'BTC' ? "(例: BTCなら4000000)" : "";
   });
 });
