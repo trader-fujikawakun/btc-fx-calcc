@@ -138,17 +138,6 @@ body[data-currency='ETH'] {
   background: linear-gradient(to bottom, #3b4c6b, #1d2b44);
 }
 
-body[data-currency='XRP'] {
-  background: linear-gradient(to bottom, #444, #000);
-  color: #fff;
-}
-
-body[data-currency='XRP'] input,
-body[data-currency='XRP'] .form-group {
-  background: #222;
-  color: #fff;
-}
-
 body[data-currency='XRP'] .results-card {
   color: #000;
 }
