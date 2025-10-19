@@ -1,63 +1,81 @@
-const margin = document.getElementById("margin");
-const entryPrice = document.getElementById("entry-price");
-const leverage = document.getElementById("leverage");
-const stopLoss = document.getElementById("stop-loss");
-const takeProfit = document.getElementById("take-profit");
+const quotes = [
+  "勝つことに集中するな。負けないことに集中せよ。",
+  "恐怖は最大の敵。冷静さが勝利を呼ぶ。",
+  "準備がすべてを決める。",
+  "リスクを制する者が市場を制す。",
+  "資金管理はトレーダーの命綱。",
+  "ルールを破るならトレードをやめろ。"
+];
 
-const positionSizeEl = document.getElementById("position-size");
-const lossAmountEl = document.getElementById("loss-amount");
-const profitAmountEl = document.getElementById("profit-amount");
-const resultCard = document.getElementById("result-card");
-
-const currencyTabs = document.querySelectorAll(".currency-tab");
+const currencySettings = {
+  BTC: { unit: "BTC", color: "#f7931a", bg: "#fff5e6" },
+  XAUT: { unit: "XAUT", color: "#8B4513", bg: "#fdf1e7" },
+  ETH: { unit: "ETH", color: "#3c3c3d", bg: "#f0f0ff" },
+  XRP: { unit: "XRP", color: "#000000", bg: "#f7f7f7" }
+};
 
 function calculate() {
-  const m = parseFloat(margin.value);
-  const e = parseFloat(entryPrice.value);
-  const l = parseFloat(leverage.value);
-  const s = parseFloat(stopLoss.value);
-  const t = parseFloat(takeProfit.value);
+  const balance = parseFloat(document.getElementById("balance").value);
+  const risk = parseFloat(document.getElementById("risk").value);
+  const entry = parseFloat(document.getElementById("entry").value);
+  const stoploss = parseFloat(document.getElementById("stoploss").value);
+  const takeprofit = parseFloat(document.getElementById("takeprofit").value);
+  const unit = document.getElementById("unit").textContent;
 
-  if (isNaN(m) || isNaN(e) || isNaN(l) || isNaN(s)) {
-    resultCard.classList.add("hidden");
-    return;
-  }
+  if (balance && risk && entry && stoploss && entry !== stoploss) {
+    const lossPerUnit = Math.abs(entry - stoploss);
+    const riskAmount = balance * (risk / 100);
+    const positionSize = riskAmount / lossPerUnit;
 
-  const maxPositionSize = (m * l) / e;
-  const stopDiff = Math.abs(e - s);
-  const lossPerUnit = stopDiff;
-  const lossAmount = lossPerUnit * maxPositionSize;
+    document.getElementById("positionSize").textContent = positionSize.toFixed(4);
+    document.getElementById("lossAmount").textContent = `${riskAmount.toFixed(2)} USD`;
 
-  positionSizeEl.textContent = maxPositionSize.toFixed(4) + " 枚";
-  lossAmountEl.textContent = Math.floor(lossAmount).toLocaleString() + " 円";
-
-  if (!isNaN(t)) {
-    const profitPerUnit = Math.abs(t - e);
-    const profitAmount = profitPerUnit * maxPositionSize;
-    profitAmountEl.textContent = Math.floor(profitAmount).toLocaleString() + " 円";
+    if (takeprofit) {
+      const profitPerUnit = Math.abs(takeprofit - entry);
+      const profitAmount = profitPerUnit * positionSize;
+      document.getElementById("profitAmount").textContent = `${profitAmount.toFixed(2)} USD`;
+    } else {
+      document.getElementById("profitAmount").textContent = "-";
+    }
   } else {
-    profitAmountEl.textContent = "-";
+    document.getElementById("positionSize").textContent = "-";
+    document.getElementById("lossAmount").textContent = "-";
+    document.getElementById("profitAmount").textContent = "-";
   }
-
-  resultCard.classList.remove("hidden");
 }
 
-// 入力変更で即時反映
-[margin, entryPrice, leverage, stopLoss, takeProfit].forEach(input => {
+// 自動計算設定
+document.querySelectorAll("input").forEach(input => {
   input.addEventListener("input", calculate);
 });
 
-// タブ切り替え
-currencyTabs.forEach(tab => {
+// ランダム名言
+document.getElementById("randomQuote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// 通貨切り替え
+document.querySelectorAll(".currency-tab").forEach(tab => {
   tab.addEventListener("click", () => {
-    document.querySelector(".currency-tab.active").classList.remove("active");
+    document.querySelectorAll(".currency-tab").forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
 
-    const selected = tab.getAttribute("data-currency");
-    document.body.setAttribute("data-currency", selected);
+    const currency = tab.dataset.currency;
+    const settings = currencySettings[currency];
+
+    // 色変更
+    document.documentElement.style.setProperty("--tab-color", settings.color);
+    document.documentElement.style.setProperty("--bg-color", settings.bg);
+
+    document.getElementById("unit").textContent = settings.unit;
+
+    // 記入例
+    document.getElementById("example-balance").textContent = currency === "BTC" ? "例: 50000" : "";
+    document.getElementById("example-risk").textContent = currency === "BTC" ? "例: 2" : "";
+    document.getElementById("example-entry").textContent = currency === "BTC" ? "例: 35000" : "";
+    document.getElementById("example-stop").textContent = currency === "BTC" ? "例: 34000" : "";
+    document.getElementById("example-takeprofit").textContent = currency === "BTC" ? "例: 37000" : "";
 
     // 入力リセット
-    [margin, entryPrice, leverage, stopLoss, takeProfit].forEach(input => input.value = "");
-    resultCard.classList.add("hidden");
+    document.querySelectorAll("input").forEach(i => (i.value = ""));
+    calculate();
   });
 });
