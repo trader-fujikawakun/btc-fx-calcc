@@ -1,66 +1,92 @@
-const tabs = document.querySelectorAll(".tab");
+const tabs = document.querySelectorAll(".currency-tab");
 const body = document.body;
+const examples = document.querySelectorAll(".example");
+const results = document.getElementById("results");
+const form = document.getElementById("calc-form");
 
-const colorMap = {
-  BTC: '#FF8C00',
-  XAUT: '#5C4033',
-  ETH: '#505050',
-  XRP: '#000000'
+// 現在の通貨
+let currentCurrency = "BTC";
+
+// 通貨ごとの背景と色テーマ
+const themes = {
+  BTC: {
+    bg: "var(--btc-bg)",
+    color: "var(--btc-color)",
+  },
+  XAUT: {
+    bg: "var(--xaut-bg)",
+    color: "var(--xaut-color)",
+  },
+  ETH: {
+    bg: "var(--eth-bg)",
+    color: "var(--eth-color)",
+  },
+  XRP: {
+    bg: "var(--xrp-bg)",
+    color: "var(--xrp-color)",
+  },
 };
 
-let selectedAsset = "BTC";
-
-tabs.forEach(tab => {
+// タブ切り替え処理
+tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
+    tabs.forEach((t) => t.classList.remove("active"));
     tab.classList.add("active");
-    selectedAsset = tab.dataset.asset;
 
-    document.documentElement.style.setProperty('--accent-color', colorMap[selectedAsset]);
-    body.style.background = `linear-gradient(to bottom right, ${colorMap[selectedAsset]}55, #f5f5f5)`;
-
-    calculatePosition();
+    const selected = tab.dataset.currency;
+    currentCurrency = selected;
+    applyTheme(selected);
+    updateExample(selected);
+    autoCalculate(); // 切り替えたら再計算
   });
 });
 
-const inputs = document.querySelectorAll("input");
-inputs.forEach(input => {
-  input.addEventListener("input", calculatePosition);
+// テーマ適用
+function applyTheme(currency) {
+  const theme = themes[currency];
+  body.style.background = theme.bg;
+}
+
+// BTCだけ記入例を表示
+function updateExample(currency) {
+  examples.forEach((ex) => {
+    ex.style.display = ex.dataset.currency === currency ? "inline" : "none";
+  });
+}
+
+// 入力イベントで自動計算
+form.querySelectorAll("input").forEach((input) => {
+  input.addEventListener("input", autoCalculate);
 });
 
-function calculatePosition() {
-  const balance = parseFloat(document.getElementById("balance").value);
-  const riskPercent = parseFloat(document.getElementById("risk-percent").value);
-  const entryPrice = parseFloat(document.getElementById("entry-price").value);
-  const stopLoss = parseFloat(document.getElementById("stop-loss").value);
-  const takeProfit = parseFloat(document.getElementById("take-profit").value);
+// 自動計算関数
+function autoCalculate() {
+  const price = parseFloat(document.getElementById("price").value);
+  const lossAmount = parseFloat(document.getElementById("loss-amount").value);
+  const lossPercent = parseFloat(document.getElementById("loss-percent").value);
+  const lossPrice = parseFloat(document.getElementById("loss-price").value);
+  const profitPrice = parseFloat(document.getElementById("profit-price").value);
 
-  if (!balance || !riskPercent || !entryPrice || !stopLoss) return;
+  if (
+    isNaN(price) || isNaN(lossAmount) || isNaN(lossPercent) || isNaN(lossPrice)
+  ) {
+    results.classList.add("hidden");
+    return;
+  }
 
-  const riskAmount = balance * (riskPercent / 100);
-  const lossPerUnit = Math.abs(entryPrice - stopLoss);
-  const positionSize = (riskAmount / lossPerUnit).toFixed(4);
+  const positionSize = lossAmount / Math.abs(price - lossPrice);
+  const expectedLoss = Math.abs(price - lossPrice) * positionSize;
+  const expectedProfit = isNaN(profitPrice)
+    ? "-"
+    : ((Math.abs(profitPrice - price)) * positionSize).toFixed(0);
 
-  const lossAmount = (lossPerUnit * positionSize).toFixed(2);
-  const profitAmount = takeProfit ? ((Math.abs(takeProfit - entryPrice) * positionSize).toFixed(2)) : "-";
+  document.getElementById("position-size").textContent = positionSize.toFixed(3);
+  document.getElementById("expected-loss").textContent = expectedLoss.toFixed(0);
+  document.getElementById("expected-profit").textContent = expectedProfit;
 
-  document.getElementById("position-size").textContent = `${positionSize} ${selectedAsset}`;
-  document.getElementById("loss-amount").textContent = `${lossAmount} USDT`;
-  document.getElementById("profit-amount").textContent = takeProfit ? `${profitAmount} USDT` : "-";
-
-  showQuote();
+  results.classList.remove("hidden");
 }
 
-function showQuote() {
-  const quotes = [
-    "勝者とは、諦めない者である。",
-    "感情を排せ、ロジックで取引せよ。",
-    "リスク管理こそが最大の武器。",
-    "損切りは敗北ではない、戦略である。",
-    "継続こそが成功への近道。",
-    "市場は常に正しい。間違うのは自分だ。"
-  ];
-  const quoteBox = document.getElementById("quote-box");
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  quoteBox.textContent = `📘 今日の名言：${randomQuote}`;
-}
+// 初期化
+applyTheme("BTC");
+updateExample("BTC");
