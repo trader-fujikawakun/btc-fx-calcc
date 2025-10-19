@@ -1,108 +1,169 @@
+:root {
+  --btc-color: #FFA500;
+  --xaut-color: #8B4513;
+  --eth-color: #708090;
+  --xrp-color: #000000;
+  --accent-color: var(--btc-color);
+  --font-main: 'Arial', sans-serif;
+}
+
 body {
-  font-family: "Helvetica", sans-serif;
-  background-color: #fff9f2;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  font-family: var(--font-main);
+  background: linear-gradient(to bottom right, #fffdf7, #f0f0f0);
+  transition: background 0.5s ease;
+  color: #333;
 }
 
 .container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
 }
 
-.title {
-  font-size: 1.6rem;
+header {
   text-align: left;
-  margin-bottom: 10px;
-  color: #222;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
-.currency-toggle {
+#title {
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  gap: 5px;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.currency-toggle button {
+.tab {
   flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 0.5rem;
   font-weight: bold;
-  background-color: #eee;
-  transition: all 0.2s ease;
+  border: none;
+  background-color: #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.currency-toggle button.active {
-  background-color: #f7931a;
+.tab.active {
+  background-color: var(--accent-color);
   color: white;
 }
 
 form label {
   display: block;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
-  background-color: #ffffffcc;
-  padding: 8px;
-  border-radius: 5px;
-  color: #000;
+  margin-bottom: 0.8rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 input[type="number"] {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 1rem;
 }
 
-.result {
-  margin-top: 20px;
-  background-color: #fff3e0;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-}
-
-.result h2 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.sns-button {
+.note {
+  font-size: 0.85rem;
+  color: #666;
   display: block;
-  width: 100%;
-  background: linear-gradient(to right, #faae42, #f7931a);
-  color: white;
-  font-weight: bold;
-  padding: 12px;
-  border: none;
-  border-radius: 25px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  transition: background 0.3s ease;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 }
 
-.sns-button:hover {
-  background: linear-gradient(to right, #f7931a, #faae42);
+.results .card {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 1.2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.results p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+#position-size {
+  color: #e91e63;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#loss-amount {
+  color: red;
+  font-weight: bold;
+}
+
+#profit-amount {
+  color: blue;
+  font-weight: bold;
+}
+
+.quote-box {
+  margin-top: 1rem;
+  font-style: italic;
+  animation: fadeIn 1s ease-in-out;
+  padding-left: 0.5rem;
+}
+
+footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.developer-link {
+  display: inline-block;
+  padding: 0.7rem 1rem;
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.developer-link:hover {
+  background-color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 @media screen and (max-width: 480px) {
-  html, body {
-    font-size: 15px;
+  .container {
+    padding: 0.8rem;
   }
 
-  .title {
-    font-size: 1.2rem;
+  #title {
+    font-size: 1.1rem;
+  }
+
+  .tab {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+
+  input[type="number"] {
+    font-size: 0.9rem;
+  }
+
+  .results p {
+    font-size: 0.9rem;
   }
 }
