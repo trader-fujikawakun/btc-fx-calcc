@@ -19,7 +19,7 @@ header {
 }
 
 h1 {
-  font-size: 1.4rem;
+  font-size: 1.2rem; /* フォントサイズを小さく調整 */
   line-height: 1.4;
   font-weight: bold;
 }
@@ -96,7 +96,7 @@ input {
 
 #positionSize {
   font-size: 1.6rem;
-  color: #e67e22; /* default BTC */
+  color: #e67e22;
 }
 
 #lossAmount {
@@ -142,8 +142,9 @@ body[data-currency='ETH'] {
   background: linear-gradient(to bottom, #dbe9f4, #3b4c6b);
 }
 
-body[data-currency='XRP'] .results-card {
-  color: #000;
+body[data-currency='XRP'] {
+  background: linear-gradient(to bottom, #444, #000);
+  color: #fff;
 }
 
 body[data-currency='XRP'] input,
