@@ -4,25 +4,29 @@
   padding: 0;
 }
 
+html,
 body {
+  height: 100%;
   font-family: "Helvetica Neue", sans-serif;
   background: linear-gradient(to bottom, #ffe9e0, #fff);
   color: #333;
   padding: 0.5rem;
   max-width: 480px;
   margin: auto;
+  overflow-y: hidden;
   font-size: 14px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
 }
 
 h1 {
   font-size: 1.1rem;
   line-height: 1.3;
   font-weight: bold;
+  text-align: center;
 }
 
 .nowrap {
@@ -44,7 +48,7 @@ h1 {
   background-color: #ddd;
   color: #333;
   font-weight: bold;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -62,33 +66,35 @@ main {
 .form-group {
   background: rgba(255, 255, 255, 0.9);
   padding: 0.5rem;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 label {
   display: block;
   font-weight: bold;
+  font-size: 0.9rem;
   margin-bottom: 0.3rem;
-  font-size: 0.85rem;
+  line-height: 1.3;
 }
 
 input {
   width: 100%;
   padding: 0.4rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 0.9rem;
+  border-radius: 6px;
+  font-size: 16px; /* iOSズーム防止 */
 }
 
 .results-card {
   background: #fff;
-  padding: 0.6rem;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   font-weight: bold;
-  font-size: 0.95rem;
+  transition: opacity 0.3s;
+  font-size: 0.9rem;
 }
 
 #positionSize {
@@ -98,7 +104,7 @@ input {
 
 #lossAmount,
 #profitAmount {
-  font-size: 1rem;
+  font-weight: bold;
 }
 
 .sns-button {
@@ -111,7 +117,7 @@ input {
   border-radius: 999px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   transition: background 0.3s;
 }
 
@@ -119,21 +125,21 @@ input {
   background: #e17000;
 }
 
-/* Currency themes */
+/* 通貨ごとのテーマ背景 */
 body[data-currency='BTC'] {
   background: linear-gradient(to bottom, #ffecd2, #fcb69f);
 }
 
 body[data-currency='XAUT'] {
-  background: linear-gradient(to bottom, #a97d45, #603813);
+  background: linear-gradient(to bottom, #8b5e3c, #5d3b1f);
 }
 
 body[data-currency='ETH'] {
-  background: linear-gradient(to bottom, #cfdaf0, #243a5e);
+  background: linear-gradient(to bottom, #3b4c6b, #1d2b44);
 }
 
 body[data-currency='XRP'] {
-  background: linear-gradient(to bottom, #333, #000);
+  background: linear-gradient(to bottom, #444, #000);
   color: #fff;
 }
 
