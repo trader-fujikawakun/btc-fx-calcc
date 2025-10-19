@@ -1,198 +1,167 @@
-:root {
-  --btc-bg: linear-gradient(to bottom right, #FFA726, #FF7043);
-  --xaut-bg: linear-gradient(to bottom right, #8B4513, #DAA520);
-  --eth-bg: linear-gradient(to bottom right, #424242, #7E57C2);
-  --xrp-bg: linear-gradient(to bottom right, #263238, #37474F);
-
-  --btc-color: #FF9800;
-  --xaut-color: #B8860B;
-  --eth-color: #7E57C2;
-  --xrp-color: #607D8B;
-
-  --card-bg: #ffffffcc;
-  --text-main: #222;
-  --text-muted: #555;
-  --red: #e53935;
-  --blue: #1e88e5;
-  --highlight: #333;
-}
-
+/* 全体レイアウト */
 body {
-  font-family: "Helvetica Neue", sans-serif;
   margin: 0;
-  padding: 0;
-  background: var(--btc-bg);
-  color: var(--text-main);
-  transition: background 0.3s ease;
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", sans-serif;
+  background: linear-gradient(to bottom, #fff8f2, #f9f9f9);
+  color: #333;
 }
 
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* タイトル */
 header {
   text-align: left;
-  padding: 20px;
+  margin-bottom: 20px;
 }
 
-#page-title {
+#main-title {
+  font-size: 20px;
   margin: 0;
-  font-size: 22px;
-  color: #fff;
-  padding-bottom: 10px;
-  line-height: 1.4;
-  word-break: break-word;
+  padding: 10px 0;
+  line-height: 1.3;
 }
 
-.tab-container {
+/* 通貨切り替え */
+.currency-selector {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 
-.currency-tab {
-  padding: 8px 16px;
-  border: none;
-  background: #ffffffcc;
-  color: #333;
-  border-radius: 8px;
+.currency-btn {
+  flex: 1;
+  padding: 10px;
   font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background: #ccc;
+  color: white;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.3s;
 }
 
-.currency-tab.active {
-  background: #333;
-  color: #fff;
+.currency-btn.active[data-currency="BTC"] {
+  background-color: #f7931a;
 }
 
-main {
-  padding: 10px 16px;
-  max-width: 600px;
-  margin: 0 auto;
+.currency-btn.active[data-currency="XAUT"] {
+  background-color: #8b5e3c;
 }
 
-.form-group {
+.currency-btn.active[data-currency="ETH"] {
+  background-color: #555;
+}
+
+.currency-btn.active[data-currency="XRP"] {
+  background-color: #111;
+}
+
+/* 入力フォーム */
+.input-group {
   margin-bottom: 16px;
 }
 
 label {
+  font-size: 14px;
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  background: rgba(255,255,255,0.85);
-  padding: 5px 8px;
-  border-radius: 6px;
-  color: #111;
-}
-
-.example {
-  color: #999;
-  font-weight: normal;
-  margin-left: 6px;
+  margin-bottom: 6px;
+  background-color: white;
+  padding: 4px;
+  border-radius: 5px;
+  color: #000;
 }
 
 input {
   width: 100%;
   padding: 10px;
+  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
-.info-note {
-  font-size: 13px;
-  color: #444;
-  margin-top: 4px;
-}
-
-.results-card {
-  margin-top: 20px;
-  background: var(--card-bg);
+/* 結果表示 */
+.card {
+  background-color: white;
   padding: 16px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 0.5s ease forwards;
+  border-radius: 12px;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  animation: fadeIn 0.5s ease-in;
 }
 
-.hidden {
-  display: none;
+#positionSize {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
-.results-card h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.highlight {
-  font-size: 20px;
+#expectedLoss {
+  color: red;
   font-weight: bold;
 }
 
-.orange { color: var(--btc-color); }
-.red { color: var(--red); }
-.blue { color: var(--blue); }
-
-.unit {
-  font-size: 14px;
-  color: #555;
+#expectedProfit {
+  color: #3498db;
+  font-weight: bold;
 }
 
-.sns-link {
-  display: block;
-  width: fit-content;
-  margin: 24px auto;
-  background: #333;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 50px;
+/* フッター */
+.footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-button {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #f7931a;
+  color: white;
   text-decoration: none;
+  border-radius: 25px;
   font-weight: bold;
-  transition: all 0.3s;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s ease;
 }
 
-.sns-link:hover {
-  background: #555;
-  transform: scale(1.03);
+.social-button:hover {
+  background: #da7800;
 }
 
+/* アニメーション */
 @keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@media screen and (max-width: 480px) {
-  #page-title {
-    font-size: 17px;
-    text-align: left;
+/* モバイル対応 */
+@media (max-width: 480px) {
+  #main-title {
+    font-size: 16px;
   }
 
-  .sns-link {
+  .currency-selector {
+    gap: 6px;
+  }
+
+  .social-button {
     font-size: 14px;
-    padding: 10px 20px;
-  }
-
-  .currency-tab {
-    font-size: 13px;
-    padding: 6px 12px;
+    padding: 10px 16px;
   }
 
   input {
-    font-size: 15px;
+    font-size: 14px;
     padding: 8px;
   }
 
-  .form-group {
-    margin-bottom: 12px;
-  }
-
-  .results-card {
-    padding: 14px;
-  }
-
-  .highlight {
-    font-size: 18px;
+  .card p {
+    margin: 8px 0;
   }
 }
