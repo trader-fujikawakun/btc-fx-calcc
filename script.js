@@ -12,14 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const expectedLoss = document.getElementById("expectedLoss");
   const expectedProfit = document.getElementById("expectedProfit");
 
-  let selectedCurrency = "BTC";
-
   const currencyUnits = {
     BTC: "BTC",
     XAUT: "XAUT",
     ETH: "ETH",
     XRP: "XRP"
   };
+
+  const backgroundColors = {
+    BTC: "#fff8ec",
+    XAUT: "#f5ede3",
+    ETH: "#f1f1f1",
+    XRP: "#eeeeee"
+  };
+
+  let selectedCurrency = "BTC";
 
   function calculate() {
     const b = parseFloat(balance.value);
@@ -52,24 +59,17 @@ document.addEventListener("DOMContentLoaded", () => {
       currencyButtons.forEach(btn => btn.classList.remove("active"));
       button.classList.add("active");
       selectedCurrency = button.dataset.currency;
+
       unitDisplay.textContent = currencyUnits[selectedCurrency];
+      document.body.style.background = backgroundColors[selectedCurrency] || "#ffffff";
 
-      // 通貨ごとの背景色切り替え
-      let bg = "#ffffff";
-      if (selectedCurrency === "BTC") bg = "#fff4e6";
-      if (selectedCurrency === "XAUT") bg = "#f1e3d3";
-      if (selectedCurrency === "ETH") bg = "#e6e6e6";
-      if (selectedCurrency === "XRP") bg = "#f4f4f4";
-      document.body.style.background = bg;
-
-      // 記入例はBTCのみ表示
       document.querySelectorAll(".example").forEach(el => {
-        el.style.display = (selectedCurrency === "BTC") ? "inline" : "none";
+        el.style.display = selectedCurrency === "BTC" ? "inline" : "none";
       });
 
       calculate();
     });
   });
 
-  calculate(); // 初期計算
+  calculate();
 });
