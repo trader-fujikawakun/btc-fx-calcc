@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>仮想通貨FX ポジションサイズ自動計算ツール</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    h1 {
-      font-size: 1.2rem; /* フォントサイズを少し小さく */
-    }
-  </style>
 </head>
 <body data-currency="BTC">
   <header>
@@ -26,18 +21,16 @@
     <form id="calcForm">
       <div class="form-group">
         <label>① 先物証拠金（残高）は何USDTですか？</label>
-        <input type="number" id="capital" placeholder="例: 100000" required />
-        <span class="unit">USDT</span>
+        <input type="number" id="capital" required />
       </div>
 
       <div class="form-group">
         <label>② 取引で許容できる損失額は口座残高の何％ですか？</label>
-        <input type="number" id="riskPercentage" placeholder="例: 2" required />
-        <span class="unit">%</span>
+        <input type="number" id="riskPercentage" required />
       </div>
 
       <div class="form-group">
-        <label>③ エントリー価格はどの価格ですか？ <span class="example" id="priceExample">(例: BTCなら4000000)</span></label>
+        <label>③ エントリー価格はどの価格ですか？</label>
         <input type="number" id="entryPrice" required />
       </div>
 
@@ -54,8 +47,8 @@
 
     <div id="results" class="results-card">
       <p>適正ポジションサイズ：<span id="positionSize">-</span> <span id="unit">BTC</span></p>
-      <p>想定損失額：<span id="lossAmount">-</span> USDT</p>
-      <p>想定利益：<span id="profitAmount">-</span> USDT</p>
+      <p>想定損失額：<span id="lossAmount">-</span></p>
+      <p>想定利益：<span id="profitAmount">-</span></p>
     </div>
 
     <a class="sns-button" href="https://lit.link/fxbtc" target="_blank" rel="noopener">当サイト開発者のSNSはこちらをタップ</a>
