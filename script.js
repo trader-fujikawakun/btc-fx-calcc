@@ -1,54 +1,64 @@
-function calculatePositionSize() {
-  const balance = parseFloat(document.getElementById("balance").value);
-  const riskPercentage = parseFloat(document.getElementById("riskPercentage").value);
-  const entryPrice = parseFloat(document.getElementById("entryPrice").value);
-  const stopLoss = parseFloat(document.getElementById("stopLoss").value);
-  const takeProfit = parseFloat(document.getElementById("takeProfit").value);
+const tabs = document.querySelectorAll(".tab");
+const body = document.body;
 
-  if (isNaN(balance) || isNaN(riskPercentage) || isNaN(entryPrice) || isNaN(stopLoss)) {
-    document.getElementById("result").style.display = "none";
-    return;
-  }
+const colorMap = {
+  BTC: '#FFA500',
+  XAUT: '#8B4513',
+  ETH: '#708090',
+  XRP: '#000000'
+};
 
-  const riskAmount = balance * (riskPercentage / 100);
-  const positionSize = riskAmount / Math.abs(entryPrice - stopLoss);
-  document.getElementById("positionSize").innerText =
-    `ポジションサイズ: ${positionSize.toFixed(3)} 枚`;
+let selectedAsset = "BTC";
 
-  if (!isNaN(takeProfit)) {
-    const expectedProfit = positionSize * Math.abs(takeProfit - entryPrice);
-    document.getElementById("expectedProfit").innerText =
-      `想定利益: ${expectedProfit.toFixed(2)} USDT`;
-  } else {
-    document.getElementById("expectedProfit").innerText = "";
-  }
-
-  document.getElementById("result").style.display = "block";
-}
-
-// 自動計算イベント
-document.querySelectorAll("input").forEach(input => {
-  input.addEventListener("input", calculatePositionSize);
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    selectedAsset = tab.dataset.asset;
+    document.documentElement.style.setProperty('--accent-color', colorMap[selectedAsset]);
+    body.style.background = `linear-gradient(to bottom right, ${colorMap[selectedAsset]}22, #f0f0f0)`;
+    calculatePosition();
+  });
 });
 
-// 通貨切替
-document.getElementById("btc-tab").addEventListener("click", () => setCurrencyTab("btc"));
-document.getElementById("xaut-tab").addEventListener("click", () => setCurrencyTab("xaut"));
-document.getElementById("eth-tab").addEventListener("click", () => setCurrencyTab("eth"));
-document.getElementById("xrp-tab").addEventListener("click", () => setCurrencyTab("xrp"));
+const inputs = document.querySelectorAll("input");
+inputs.forEach(input => {
+  input.addEventListener("input", calculatePosition);
+});
 
-function setCurrencyTab(tab) {
-  const buttons = document.querySelectorAll(".currency-toggle button");
-  buttons.forEach(btn => btn.classList.remove("active"));
+function calculatePosition() {
+  const balance = parseFloat(document.getElementById("balance").value);
+  const riskPercent = parseFloat(document.getElementById("risk-percent").value);
+  const entryPrice = parseFloat(document.getElementById("entry-price").value);
+  const stopLoss = parseFloat(document.getElementById("stop-loss").value);
+  const takeProfit = parseFloat(document.getElementById("take-profit").value);
 
-  document.getElementById(`${tab}-tab`).classList.add("active");
+  if (!balance || !riskPercent || !entryPrice || !stopLoss) return;
 
-  const bgColors = {
-    btc: "#fff9f2",
-    xaut: "#f0f4f9",
-    eth: "#eaf7ff",
-    xrp: "#f8f0ff"
-  };
+  const riskAmount = balance * (riskPercent / 100);
+  const lossPerUnit = Math.abs(entryPrice - stopLoss);
+  const positionSize = (riskAmount / lossPerUnit).toFixed(4);
 
-  document.body.style.backgroundColor = bgColors[tab] || "#ffffff";
+  const lossAmount = (lossPerUnit * positionSize).toFixed(2);
+  const profitAmount = takeProfit ? ((Math.abs(takeProfit - entryPrice) * positionSize).toFixed(2)) : "-";
+
+  document.getElementById("position-size").textContent = `${positionSize} ${selectedAsset}`;
+  document.getElementById("loss-amount").textContent = `${lossAmount} USDT`;
+  document.getElementById("profit-amount").textContent = takeProfit ? `${profitAmount} USDT` : "-";
+
+  showQuote();
+}
+
+function showQuote() {
+  const quotes = [
+    "勝者とは、諦めない者である。",
+    "感情を排せ、ロジックで取引せよ。",
+    "リスク管理こそが最大の武器。",
+    "損切りは敗北ではない、戦略である。",
+    "継続こそが成功への近道。",
+    "市場は常に正しい。間違うのは自分だ。"
+  ];
+  const quoteBox = document.getElementById("quote-box");
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  quoteBox.textContent = `📘 今日の名言：${randomQuote}`;
 }
