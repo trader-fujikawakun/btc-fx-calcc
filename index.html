@@ -6,7 +6,7 @@
   <title>仮想通貨FX ポジションサイズ自動計算ツール</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body data-currency="BTC">
   <header>
     <h1><span class="nowrap">【仮想通貨FX】</span><br><span class="nowrap">ポジションサイズ自動計算ツール</span></h1>
     <div class="currency-tabs">
@@ -22,7 +22,7 @@
       <div class="form-group">
         <label>① 証拠金はいくらですか？</label>
         <input type="number" id="capital" placeholder="例: 100000" required />
-        <span class="unit">円</span>
+        <span class="unit">USDT</span>
       </div>
 
       <div class="form-group">
@@ -44,14 +44,13 @@
       <div class="form-group">
         <label>⑤ 利確位置はどこに設定しますか？</label>
         <input type="number" id="takeProfit" />
-        <p class="note">※入力すれば想定利益も自動表示されます。</p>
       </div>
     </form>
 
     <div id="results" class="results-card">
       <p>適正ポジションサイズ：<span id="positionSize">-</span> <span id="unit">BTC</span></p>
-      <p>想定損失額：<span id="lossAmount">-</span> 円</p>
-      <p>想定利益：<span id="profitAmount">-</span> 円</p>
+      <p>想定損失額：<span id="lossAmount">-</span> USDT</p>
+      <p>想定利益：<span id="profitAmount">-</span> USDT</p>
     </div>
 
     <a class="sns-button" href="https://lit.link/fxbtc" target="_blank" rel="noopener">当サイト開発者のSNSはこちらをタップ</a>
