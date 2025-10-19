@@ -7,57 +7,56 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1 id="page-title">【仮想通貨FX】ポジションサイズ自動計算ツール</h1>
-    <div class="tab-container">
-      <button class="currency-tab active" data-currency="BTC">BTC</button>
-      <button class="currency-tab" data-currency="XAUT">XAUT</button>
-      <button class="currency-tab" data-currency="ETH">ETH</button>
-      <button class="currency-tab" data-currency="XRP">XRP</button>
-    </div>
-  </header>
+  <div class="container">
 
-  <main>
+    <header>
+      <h1 id="main-title">【仮想通貨FX】ポジションサイズ自動計算ツール</h1>
+
+      <div class="currency-selector">
+        <button class="currency-btn active" data-currency="BTC">BTC</button>
+        <button class="currency-btn" data-currency="XAUT">XAUT</button>
+        <button class="currency-btn" data-currency="ETH">ETH</button>
+        <button class="currency-btn" data-currency="XRP">XRP</button>
+      </div>
+    </header>
+
     <form id="calc-form">
-      <div class="form-group">
-        <label>① 現在の価格はいくらですか？ <span class="example" data-currency="BTC">例: 6800000</span></label>
-        <input type="number" id="price" required />
+      <div class="input-group">
+        <label>① 先物証拠金（残高）は何USDTですか？<br><span class="example">例: 1000</span></label>
+        <input type="number" id="balance" required />
       </div>
 
-      <div class="form-group">
-        <label>② 許容損失額（1トレード）はいくらですか？</label>
-        <input type="number" id="loss-amount" required />
+      <div class="input-group">
+        <label>② 取引で許容できる損失額は口座残高の何％ですか？<br><span class="example">例: 2</span></label>
+        <input type="number" id="lossPercent" required />
       </div>
 
-      <div class="form-group">
-        <label>③ 許容損失割合（％）は何％ですか？</label>
-        <input type="number" id="loss-percent" required />
+      <div class="input-group">
+        <label>③ エントリー価格はどの価格ですか？<br><span class="example">例: 30000</span></label>
+        <input type="number" id="entryPrice" required />
       </div>
 
-      <div class="form-group">
-        <label>④ 損切り位置はどこに設定しますか？</label>
-        <input type="number" id="loss-price" required />
+      <div class="input-group">
+        <label>④ 損切り位置はどこに設定しますか？<br><span class="example">例: 29000</span></label>
+        <input type="number" id="stopLossPrice" required />
       </div>
 
-      <div class="form-group">
-        <label>⑤ 利確位置はどこに設定しますか？</label>
-        <input type="number" id="profit-price" />
-        <p class="info-note">※入力すれば想定利益も自動表示されます。</p>
+      <div class="input-group">
+        <label>⑤ 利確位置はどこに設定しますか？<br><span class="note">※入力すれば想定利益も自動表示されます。</span><br><span class="example">例: 31000</span></label>
+        <input type="number" id="takeProfitPrice" />
       </div>
     </form>
 
-    <section id="results" class="results-card hidden">
-      <h2>📊 計算結果</h2>
-      <p><strong>適正ポジションサイズ：</strong><span id="position-size" class="highlight orange">-</span> <span class="unit">通貨</span></p>
-      <p><strong>想定損失額：</strong><span id="expected-loss" class="highlight red">-</span> 円</p>
-      <p><strong>想定利益：</strong><span id="expected-profit" class="highlight blue">-</span> 円</p>
-      <div id="quote" class="quote-area"></div>
-    </section>
-  </main>
+    <div id="results" class="card">
+      <p>適正ポジションサイズ：<span id="positionSize">-</span> <span id="unit">BTC</span></p>
+      <p>想定損失額：<span id="expectedLoss">-</span></p>
+      <p>想定利益：<span id="expectedProfit">-</span></p>
+    </div>
 
-  <footer>
-    <a href="https://lit.link/fxbtc" target="_blank" class="sns-link">当サイト開発者のSNSはこちらをタップ</a>
-  </footer>
+    <div class="footer">
+      <a href="https://lit.link/fxbtc" target="_blank" class="social-button">当サイト開発者のSNSはこちらをタップ</a>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
