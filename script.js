@@ -2,9 +2,9 @@ const tabs = document.querySelectorAll(".tab");
 const body = document.body;
 
 const colorMap = {
-  BTC: '#FFA500',
-  XAUT: '#8B4513',
-  ETH: '#708090',
+  BTC: '#FF8C00',
+  XAUT: '#5C4033',
+  ETH: '#505050',
   XRP: '#000000'
 };
 
@@ -15,8 +15,10 @@ tabs.forEach(tab => {
     tabs.forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
     selectedAsset = tab.dataset.asset;
+
     document.documentElement.style.setProperty('--accent-color', colorMap[selectedAsset]);
-    body.style.background = `linear-gradient(to bottom right, ${colorMap[selectedAsset]}22, #f0f0f0)`;
+    body.style.background = `linear-gradient(to bottom right, ${colorMap[selectedAsset]}55, #f5f5f5)`;
+
     calculatePosition();
   });
 });
