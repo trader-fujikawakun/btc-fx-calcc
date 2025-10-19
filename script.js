@@ -1,56 +1,63 @@
+const margin = document.getElementById("margin");
+const entryPrice = document.getElementById("entry-price");
+const leverage = document.getElementById("leverage");
+const stopLoss = document.getElementById("stop-loss");
+const takeProfit = document.getElementById("take-profit");
+
+const positionSizeEl = document.getElementById("position-size");
+const lossAmountEl = document.getElementById("loss-amount");
+const profitAmountEl = document.getElementById("profit-amount");
+const resultCard = document.getElementById("result-card");
+
+const currencyTabs = document.querySelectorAll(".currency-tab");
+
 function calculate() {
-  const capital = parseFloat(document.getElementById('capital').value) || 0;
-  const riskPercentage = parseFloat(document.getElementById('riskPercentage').value) || 0;
-  const entryPrice = parseFloat(document.getElementById('entryPrice').value) || 0;
-  const stopLoss = parseFloat(document.getElementById('stopLoss').value) || 0;
-  const takeProfit = parseFloat(document.getElementById('takeProfit').value);
+  const m = parseFloat(margin.value);
+  const e = parseFloat(entryPrice.value);
+  const l = parseFloat(leverage.value);
+  const s = parseFloat(stopLoss.value);
+  const t = parseFloat(takeProfit.value);
 
-  const riskAmount = capital * (riskPercentage / 100);
-  const priceDifference = Math.abs(entryPrice - stopLoss);
-
-  let positionSize = "-";
-  let profit = "-";
-
-  if (priceDifference && entryPrice) {
-    positionSize = (riskAmount / priceDifference).toFixed(4);
+  if (isNaN(m) || isNaN(e) || isNaN(l) || isNaN(s)) {
+    resultCard.classList.add("hidden");
+    return;
   }
 
-  if (!isNaN(takeProfit) && takeProfit > 0) {
-    const potentialProfit = Math.abs(takeProfit - entryPrice) * parseFloat(positionSize);
-    profit = Math.round(potentialProfit).toLocaleString();
+  const maxPositionSize = (m * l) / e;
+  const stopDiff = Math.abs(e - s);
+  const lossPerUnit = stopDiff;
+  const lossAmount = lossPerUnit * maxPositionSize;
+
+  positionSizeEl.textContent = maxPositionSize.toFixed(4) + " 枚";
+  lossAmountEl.textContent = Math.floor(lossAmount).toLocaleString() + " 円";
+
+  if (!isNaN(t)) {
+    const profitPerUnit = Math.abs(t - e);
+    const profitAmount = profitPerUnit * maxPositionSize;
+    profitAmountEl.textContent = Math.floor(profitAmount).toLocaleString() + " 円";
+  } else {
+    profitAmountEl.textContent = "-";
   }
 
-  document.getElementById('positionSize').textContent = positionSize;
-  document.getElementById('lossAmount').textContent = Math.round(riskAmount).toLocaleString();
-  document.getElementById('profitAmount').textContent = profit;
+  resultCard.classList.remove("hidden");
 }
 
-document.querySelectorAll("input").forEach(input => {
+// 入力変更で即時反映
+[margin, entryPrice, leverage, stopLoss, takeProfit].forEach(input => {
   input.addEventListener("input", calculate);
 });
 
-const tabs = document.querySelectorAll(".currency-tab");
-tabs.forEach(tab => {
+// タブ切り替え
+currencyTabs.forEach(tab => {
   tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
+    document.querySelector(".currency-tab.active").classList.remove("active");
     tab.classList.add("active");
 
-    const currency = tab.dataset.currency;
-    document.body.setAttribute("data-currency", currency);
-    document.getElementById('unit').textContent = currency;
+    const selected = tab.getAttribute("data-currency");
+    document.body.setAttribute("data-currency", selected);
 
-    // リセット
-    document.getElementById('calcForm').reset();
-    document.getElementById('positionSize').textContent = '-';
-    document.getElementById('lossAmount').textContent = '-';
-    document.getElementById('profitAmount').textContent = '-';
-
-    // 記入例の表示制御
-    const example = document.getElementById('priceExample');
-    if (currency === 'BTC') {
-      example.textContent = "(例: BTCなら4000000)";
-    } else {
-      example.textContent = "";
-    }
+    // 入力リセット
+    [margin, entryPrice, leverage, stopLoss, takeProfit].forEach(input => input.value = "");
+    resultCard.classList.add("hidden");
   });
 });
