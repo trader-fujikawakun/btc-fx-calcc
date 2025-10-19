@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>仮想通貨FX ポジションサイズ自動計算ツール</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    h1 {
+      font-size: 1.2rem; /* フォントサイズを少し小さく */
+    }
+  </style>
 </head>
 <body data-currency="BTC">
   <header>
@@ -20,29 +25,29 @@
   <main>
     <form id="calcForm">
       <div class="form-group">
-        <label>① 証拠金はいくらですか？</label>
+        <label>① 先物証拠金（残高）は何USDTですか？</label>
         <input type="number" id="capital" placeholder="例: 100000" required />
         <span class="unit">USDT</span>
       </div>
 
       <div class="form-group">
-        <label>② 許容損失割合（%）は？</label>
+        <label>② 取引で許容できる損失額は口座残高の何％ですか？</label>
         <input type="number" id="riskPercentage" placeholder="例: 2" required />
         <span class="unit">%</span>
       </div>
 
       <div class="form-group">
-        <label>③ 現在価格はいくらですか？ <span class="example" id="priceExample">(例: BTCなら4000000)</span></label>
+        <label>③ エントリー価格はどの価格ですか？ <span class="example" id="priceExample">(例: BTCなら4000000)</span></label>
         <input type="number" id="entryPrice" required />
       </div>
 
       <div class="form-group">
-        <label>④ 損切り位置はどこに設定しますか？</label>
+        <label>④ 損切り位置（価格）はどこに設定しますか？</label>
         <input type="number" id="stopLoss" required />
       </div>
 
       <div class="form-group">
-        <label>⑤ 利確位置はどこに設定しますか？</label>
+        <label>⑤ 利確位置（価格）はどこに設定しますか？</label>
         <input type="number" id="takeProfit" />
       </div>
     </form>
