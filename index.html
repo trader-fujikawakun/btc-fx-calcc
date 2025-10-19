@@ -10,7 +10,6 @@
   <div class="container">
     <header>
       <h1 id="main-title">【仮想通貨FX】<br>ポジションサイズ自動計算ツール</h1>
-
       <div class="currency-selector">
         <button class="currency-btn active" data-currency="BTC">BTC</button>
         <button class="currency-btn" data-currency="XAUT">XAUT</button>
@@ -21,27 +20,27 @@
 
     <form id="calc-form">
       <div class="input-group">
-        <label>① 先物証拠金（残高）は何USDTですか？<br><span class="example">例: 1000</span></label>
+        <label>① 先物証拠金（残高）は何USDTですか？ <span class="example">例: 1000</span></label>
         <input type="number" id="balance" />
       </div>
 
       <div class="input-group">
-        <label>② 取引で許容できる損失額は口座残高の何％ですか？<br><span class="example">例: 2</span></label>
+        <label>② 取引で許容できる損失額は口座残高の何％ですか？ <span class="example">例: 2</span></label>
         <input type="number" id="lossPercent" />
       </div>
 
       <div class="input-group">
-        <label>③ エントリー価格はどの価格ですか？<br><span class="example">例: 30000</span></label>
+        <label>③ エントリー価格はどの価格ですか？ <span class="example">例: 30000</span></label>
         <input type="number" id="entryPrice" />
       </div>
 
       <div class="input-group">
-        <label>④ 損切り位置はどこに設定しますか？<br><span class="example">例: 29000</span></label>
+        <label>④ 損切り位置はどこに設定しますか？ <span class="example">例: 29000</span></label>
         <input type="number" id="stopLossPrice" />
       </div>
 
       <div class="input-group">
-        <label>⑤ 利確位置はどこに設定しますか？<br><span class="example">例: 31000</span></label>
+        <label>⑤ 利確位置はどこに設定しますか？ <span class="example">例: 31000</span></label>
         <input type="number" id="takeProfitPrice" />
       </div>
     </form>
