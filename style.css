@@ -1,154 +1,178 @@
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: "Helvetica Neue", sans-serif;
-  background: linear-gradient(to bottom, #ffe9e0, #fff);
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #fff;
   color: #333;
-  padding: 1rem;
-  max-width: 480px;
-  margin: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  transition: background-color 0.3s;
 }
 
 header {
+  margin-bottom: 10px;
   text-align: center;
-  margin-bottom: 1rem;
 }
 
 h1 {
   font-size: 1.4rem;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #ff9900; /* Default BTC */
   line-height: 1.4;
-  font-weight: bold;
-}
-
-.nowrap {
-  white-space: nowrap;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .currency-tabs {
   display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
 }
 
 .currency-tab {
-  flex: 1;
-  padding: 0.5rem;
+  padding: 6px 12px;
   border: none;
   border-radius: 6px;
-  background-color: #ddd;
-  color: #333;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s;
+  background-color: #ddd;
+  color: #333;
+  transition: background-color 0.3s;
 }
 
 .currency-tab.active {
-  color: #fff;
+  background-color: #ff9900;
+  color: white;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
 }
 
-.form-group {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 0.75rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.question-box {
+  margin-bottom: 8px;
 }
 
 label {
   display: block;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 4px;
+  border-radius: 4px;
+  color: #000;
+}
+
+.example {
+  font-size: 0.75rem;
+  color: #555;
 }
 
 input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+  padding: 8px;
   border-radius: 6px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  margin-top: 2px;
+  font-size: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.unit {
-  font-size: 0.9rem;
-  margin-left: 0.5rem;
-  color: #666;
-}
-
-.results-card {
-  background: #fff;
-  padding: 1rem;
+#result-card {
+  margin-top: 15px;
+  background: white;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: center;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+
+.highlight {
+  font-size: 1.3rem;
   font-weight: bold;
-  transition: opacity 0.3s;
+  color: #f59e0b;
 }
 
-#positionSize {
-  font-size: 1.6rem;
-  color: #e67e22; /* default BTC */
+.loss-text {
+  color: red;
+  font-weight: bold;
 }
 
-#lossAmount {
-  color: #e74c3c;
+.profit-text {
+  color: blue;
+  font-weight: bold;
 }
 
-#profitAmount {
-  color: #3498db;
+.developer {
+  margin-top: auto;
+  padding: 10px;
 }
 
-.note {
-  font-size: 0.85rem;
-  color: #777;
-}
-
-.sns-button {
-  display: block;
-  background: #ff8a00;
-  color: #fff;
-  text-align: center;
-  padding: 0.75rem;
-  margin: 1rem auto 0;
-  border-radius: 999px;
+.developer a {
+  background-color: #0ea5e9;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
-.sns-button:hover {
-  background: #e17000;
+.developer a:hover {
+  background-color: #0369a1;
 }
 
-/* Currency themes */
-body[data-currency='BTC'] {
-  background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-body[data-currency='XAUT'] {
-  background: linear-gradient(to bottom, #d2b48c, #a0522d);
+/* 通貨別背景色 */
+body[data-currency="BTC"] {
+  background-color: #fff7eb;
 }
 
-body[data-currency='ETH'] {
-  background: linear-gradient(to bottom, #dbe9f4, #3b4c6b);
+body[data-currency="XAUT"] {
+  background-color: #f3e7d3;
 }
 
-body[data-currency='XRP'] {
-  background: linear-gradient(to bottom, #444, #000);
-  color: #fff;
+body[data-currency="ETH"] {
+  background-color: #e6f0ff;
 }
 
-body[data-currency='XRP'] input,
-body[data-currency='XRP'] .form-group {
-  background: #222;
-  color: #fff;
+body[data-currency="XRP"] {
+  background-color: #f0f0f0;
+}
+
+/* タブの色も変更 */
+.currency-tab[data-currency="BTC"].active {
+  background-color: #ff9900;
+}
+
+.currency-tab[data-currency="XAUT"].active {
+  background-color: #8b4513;
+}
+
+.currency-tab[data-currency="ETH"].active {
+  background-color: #003366;
+}
+
+.currency-tab[data-currency="XRP"].active {
+  background-color: #111;
 }
