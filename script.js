@@ -1,50 +1,54 @@
-const form = document.getElementById("calc-form");
-const result = document.getElementById("result");
-const positionSizeEl = document.getElementById("position-size");
-const lossAmountEl = document.getElementById("loss-amount");
-const profitAmountEl = document.getElementById("profit-amount");
-const quoteEl = document.getElementById("quote");
-const pairSelect = document.getElementById("pair-select");
-const pageTitle = document.getElementById("page-title");
-
-const quotes = [
-  "勝つまでやめなければ、負けない。",
-  "恐怖に打ち勝てる者だけが利益を手にする。",
-  "マーケットは常に正しい。間違っているのはあなた。",
-  "勝者はリスクを恐れず、敗者はチャンスを逃す。",
-  "準備が勝利の鍵となる。",
-  "一貫性は最強の武器である。",
-  "コントロールできるのは『損失』だけだ。"
-];
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-
+function calculatePositionSize() {
   const balance = parseFloat(document.getElementById("balance").value);
-  const riskPercent = parseFloat(document.getElementById("risk").value);
-  const entry = parseFloat(document.getElementById("entry").value);
-  const stop = parseFloat(document.getElementById("stop").value);
-  const take = parseFloat(document.getElementById("take").value);
-  const pair = pairSelect.value;
+  const riskPercentage = parseFloat(document.getElementById("riskPercentage").value);
+  const entryPrice = parseFloat(document.getElementById("entryPrice").value);
+  const stopLoss = parseFloat(document.getElementById("stopLoss").value);
+  const takeProfit = parseFloat(document.getElementById("takeProfit").value);
 
-  const riskAmount = balance * (riskPercent / 100);
-  const perUnitLoss = Math.abs(entry - stop);
-  const positionSize = riskAmount / perUnitLoss;
-  const profit = take ? (Math.abs(take - entry) * positionSize) : "-";
+  if (isNaN(balance) || isNaN(riskPercentage) || isNaN(entryPrice) || isNaN(stopLoss)) {
+    document.getElementById("result").style.display = "none";
+    return;
+  }
 
-  positionSizeEl.textContent = `${positionSize.toFixed(4)} ${pair}`;
-  lossAmountEl.textContent = `${riskAmount.toFixed(2)} USDT`;
-  profitAmountEl.textContent = typeof profit === "string" ? "-" : `${profit.toFixed(2)} USDT`;
+  const riskAmount = balance * (riskPercentage / 100);
+  const positionSize = riskAmount / Math.abs(entryPrice - stopLoss);
+  document.getElementById("positionSize").innerText =
+    `ポジションサイズ: ${positionSize.toFixed(3)} 枚`;
 
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  quoteEl.textContent = `💬「${randomQuote}」`;
+  if (!isNaN(takeProfit)) {
+    const expectedProfit = positionSize * Math.abs(takeProfit - entryPrice);
+    document.getElementById("expectedProfit").innerText =
+      `想定利益: ${expectedProfit.toFixed(2)} USDT`;
+  } else {
+    document.getElementById("expectedProfit").innerText = "";
+  }
 
-  result.classList.remove("hidden");
+  document.getElementById("result").style.display = "block";
+}
 
-  // カラー切替
-  document.body.style.background = pair === "BTC"
-    ? "linear-gradient(to bottom right, #fffbe6, #fff)"
-    : "linear-gradient(to bottom right, #e0f7fa, #ffffff)";
-  document.querySelector(".result-card").style.backgroundColor = pair === "BTC" ? "#fff3e0" : "#e1f5fe";
-  pageTitle.textContent = `【${pair} FX専用】ポジションサイズ自動計算`;
+// 自動計算イベント
+document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("input", calculatePositionSize);
 });
+
+// 通貨切替
+document.getElementById("btc-tab").addEventListener("click", () => setCurrencyTab("btc"));
+document.getElementById("xaut-tab").addEventListener("click", () => setCurrencyTab("xaut"));
+document.getElementById("eth-tab").addEventListener("click", () => setCurrencyTab("eth"));
+document.getElementById("xrp-tab").addEventListener("click", () => setCurrencyTab("xrp"));
+
+function setCurrencyTab(tab) {
+  const buttons = document.querySelectorAll(".currency-toggle button");
+  buttons.forEach(btn => btn.classList.remove("active"));
+
+  document.getElementById(`${tab}-tab`).classList.add("active");
+
+  const bgColors = {
+    btc: "#fff9f2",
+    xaut: "#f0f4f9",
+    eth: "#eaf7ff",
+    xrp: "#f8f0ff"
+  };
+
+  document.body.style.backgroundColor = bgColors[tab] || "#ffffff";
+}
