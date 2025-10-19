@@ -3,57 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>【BTC/XAUT FX専用】ポジションサイズ計算</title>
+  <title>仮想通貨FX ポジションサイズ自動計算ツール</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="header-left">
-      <h1 id="page-title">【BTC FX専用】ポジションサイズ自動計算</h1>
+  <div class="container">
+    <div class="currency-toggle">
+      <button id="btc-tab" class="active">BTC</button>
+      <button id="xaut-tab">XAUT</button>
+      <button id="eth-tab">ETH</button>
+      <button id="xrp-tab">XRP</button>
     </div>
-    <div class="header-right">
-      <label for="pair-select">通貨ペア：</label>
-      <select id="pair-select">
-        <option value="BTC" selected>BTC</option>
-        <option value="XAUT">XAUT</option>
-      </select>
-      <a class="developer-link" href="https://lit.link/fxbtc" target="_blank">
-        当サイト開発者のSNSはこちらをタップ
-      </a>
-    </div>
-  </header>
 
-  <main>
-    <div class="container">
-      <form id="calc-form">
-        <label for="balance">① 先物証拠金（残高）は何USDTですか？</label>
+    <h1 class="title">仮想通貨FX ポジションサイズ自動計算ツール</h1>
+
+    <button class="sns-button" onclick="window.open('https://your-sns-link.com', '_blank')">
+      当サイト開発者のSNSはこちらをタップ
+    </button>
+
+    <form id="calc-form">
+      <label>① 証拠金（残高）は何USDTですか？
         <input type="number" id="balance" required />
+      </label>
 
-        <label for="risk">② 取引で許容できる損失額は口座残高の何％ですか？</label>
-        <input type="number" id="risk" required />
+      <label>② 許容損失は口座残高の何％ですか？
+        <input type="number" id="riskPercentage" required />
+      </label>
 
-        <label for="entry">③ エントリー価格はどの価格ですか？</label>
-        <input type="number" id="entry" required />
+      <label>③ エントリー価格はどの価格ですか？
+        <input type="number" id="entryPrice" required />
+      </label>
 
-        <label for="stop">④ 損切り位置（損失を抑える価格）はどこに設定しますか？</label>
-        <input type="number" id="stop" required />
+      <label>④ 損切り位置（価格）はどこに設定しますか？
+        <input type="number" id="stopLoss" required />
+      </label>
 
-        <label for="take">⑤ 利確位置（利益を得る価格）はどこに設定しますか？</label>
-        <input type="number" id="take" />
-        <p class="note">※入力すれば想定利益も自動表示されます。</p>
+      <label>⑤ 利確位置（価格）はどこに設定しますか？（任意）
+        <input type="number" id="takeProfit" />
+      </label>
+    </form>
 
-        <button type="submit" class="calculate-btn">計算する</button>
-      </form>
-
-      <div id="result" class="result-card hidden">
-        <h2>計算結果</h2>
-        <p><strong>適正ポジションサイズ：</strong><span id="position-size" class="highlight"></span></p>
-        <p><strong>想定損失額：</strong><span id="loss-amount" class="red"></span></p>
-        <p><strong>想定利益：</strong><span id="profit-amount" class="blue"></span></p>
-        <p id="quote" class="quote"></p>
-      </div>
+    <div class="result" id="result">
+      <h2>計算結果</h2>
+      <p id="positionSize"></p>
+      <p id="expectedProfit"></p>
     </div>
-  </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
